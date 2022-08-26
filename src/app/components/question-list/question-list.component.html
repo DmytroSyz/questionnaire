@@ -1,0 +1,88 @@
+<div class="list-wrapper">
+  <div class="cards-list">
+    <div class="question-card-wrapper" *ngFor="let question of unansweredQuestion">
+      <mat-card class="question-card" *ngIf="question.type === 'single'">
+        <mat-card-title class="question-text">
+          {{question.text}}
+        </mat-card-title>
+        <div class="question-type">
+          Question type: {{question.type | titlecase}}
+        </div>
+        <mat-card-content>
+          <div *ngFor="let answer of question.answers">
+            <mat-checkbox (change)="$event ?
+                  selection.toggle(answer.id) : null" [checked]="selection.isSelected(answer.id)">
+              {{answer.text}}
+            </mat-checkbox>
+          </div>
+          <mat-error *ngIf="question.error && submitted === question.id">{{question.error}}</mat-error>
+        </mat-card-content>
+        <button (click)="submitAnswer(question)" mat-raised-button color="primary" type="button">Submit</button>
+      </mat-card>
+
+      <mat-card *ngIf="question.type === 'multiple'" class="question-card">
+        <mat-card-title class="question-text">
+          {{question.text}}
+        </mat-card-title>
+        <div class="question-type">
+          Question type: {{question.type | titlecase}}
+        </div>
+        <mat-card-content>
+          <div *ngFor="let answer of question.answers">
+            <mat-checkbox [(ngModel)]="answer.checked">
+              {{answer.text}}
+            </mat-checkbox>
+          </div>
+          <mat-error *ngIf="question.error && submitted === question.id">{{question.error}}</mat-error>
+        </mat-card-content>
+
+        <button (click)="submitAnswer(question)" mat-raised-button color="primary" type="button">Submit</button>
+      </mat-card>
+
+      <mat-card *ngIf="question.type === 'open'" class="question-card">
+        <mat-card-title class="question-text">
+          {{question.text}}
+        </mat-card-title>
+        <div class="question-type">
+          Question type: {{question.type | titlecase}}
+        </div>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Answer the question</mat-label>
+            <textarea placeholder="Should be at least one character"
+                      [(ngModel)]="question.openAnswer" matInput minlength="1" maxlength="255" cols="10"
+                      rows="3"></textarea>
+          </mat-form-field>
+          <mat-error *ngIf="question.error && submitted === question.id">{{question.error}}</mat-error>
+        </mat-card-content>
+
+        <button (click)="submitAnswer(question)" mat-raised-button color="primary" type="button">Submit</button>
+      </mat-card>
+    </div>
+  </div>
+
+
+  <div class="cards-list">
+    <div class="question-card-wrapper" *ngFor="let question of answeredQuestion">
+      <mat-card class="question-card">
+        <mat-card-title class="question-text">
+          {{question.text}}
+        </mat-card-title>
+        <div class="question-type">
+          Question type: {{question.type | titlecase}}
+        </div>
+        <mat-card-content>
+          <div *ngIf="question.type === 'open'">
+            {{question.openAnswer}}
+          </div>
+          <div *ngFor="let answer of question.answers">
+            <div *ngIf="question.type !== 'open'" class="answer">
+              <mat-icon>{{answer.checked ? 'done' : ''}}</mat-icon> {{answer.text}}
+            </div>
+          </div>
+        </mat-card-content>
+        <button (click)="cancelAnswer(question)" mat-raised-button color="warn" type="button">Cancel</button>
+      </mat-card>
+    </div>
+  </div>
+</div>

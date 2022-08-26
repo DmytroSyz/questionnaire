@@ -1,0 +1,11 @@
+<div class="header">
+  <div class="menu">
+    <button class="menu-button" mat-raised-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button routerLink="/management" mat-menu-item>Question Management</button>
+      <button routerLink="/create" mat-menu-item>Create Question</button>
+      <button routerLink="/list" mat-menu-item>List of Questions</button>
+    </mat-menu>
+  </div>
+  <div class="title">{{headerTitle}}</div>
+</div>

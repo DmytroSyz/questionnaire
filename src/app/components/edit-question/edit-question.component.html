@@ -1,0 +1,36 @@
+<mat-card class="create-question-card">
+  <form [formGroup]="createQuestionGroup" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field>
+        <input autocomplete="off" placeholder="Enter question text" matInput type="text" formControlName="text">
+      </mat-form-field>
+    </p>
+
+    <p>
+      Select question type
+      <mat-radio-group formControlName="type" (ngModelChange)="selectType($event)" [(ngModel)]="questionType">
+        <mat-radio-button *ngFor="let type of questionTypes" [value]="type">{{type | titlecase}}</mat-radio-button>
+      </mat-radio-group>
+    </p>
+    <div *ngIf="questionType === 'single' || questionType === 'multiple'" formArrayName="answers">
+
+      <div *ngFor="let answer of answers().controls; let i=index" [formGroupName]="i">
+        <mat-form-field>
+          <input autocomplete="off" placeholder="Enter answer option" matInput type="text" formControlName="text">
+        </mat-form-field>
+        <mat-icon *ngIf="answers().controls.length > 2" (click)="removeAnswer(i)" color="warn">clear</mat-icon>
+      </div>
+
+      <div class="add-answer" (click)="addAnswer()">
+        <mat-icon>add</mat-icon>
+      </div>
+
+    </div>
+
+
+    <mat-error *ngIf="createQuestionGroup.controls['type'].invalid && submitted">Select question type is required
+    </mat-error>
+
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</mat-card>

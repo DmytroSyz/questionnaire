@@ -1,0 +1,35 @@
+table {
+  width: 70vw;
+
+}
+
+.mat-column-text {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 48% !important;
+  width: 48% !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+}
+.add-question-button {
+  position: absolute;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  bottom: 100px;
+  right: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00A3FF;
+  cursor: pointer;
+  mat-icon {
+    padding: 0;
+    margin: 0;
+    font-size: 50px;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+  }
+}
